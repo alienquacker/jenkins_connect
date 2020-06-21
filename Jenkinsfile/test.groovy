@@ -6,7 +6,18 @@ pipeline {
             steps {
                 script {
                     cleanWs()
-                    //git(branch: 'master', credentialsId: 'IlyaBurakGit', url: 'https://github.com/ilyaburak/study_jenkins.git')
+                    withCredentials([
+                        usernamePassword(credentialsId: 'srv_sudo',
+                        usernameVariable: 'username',
+                        passwordVariable: 'password')
+                    ]) {
+                        try {
+                            sh "echo '${password}' | sudo -S docker stop isng"
+                            sh "echo '${password}' | sudo -S docker container rm isng"
+                        } catch (Exception e) {
+                            print 'container not exist, skip clean'
+                        }
+                    }                    
                 }
                 script {
                     echo 'Start download project'
@@ -16,7 +27,7 @@ pipeline {
                               extensions                       : [[$class           : 'RelativeTargetDirectory',
                                                                    relativeTargetDir: 'auto']],
                               submoduleCfg                     : [],
-                              userRemoteConfigs                : [[credentialsId: 'IlyaBurakGit', url: 'https://github.com/ilyaburak/study_jenkins.git']]])
+                              userRemoteConfigs                : [[credentialsId: 'AZGit', url: 'https://github.com/alienquacker/jenkins_connect.git']]])
                 }
             }
         }
