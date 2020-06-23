@@ -14,7 +14,7 @@ pipeline {
                             sh "echo '${password}' | sudo -S docker stop az_git"
                             sh "echo '${password}' | sudo -S docker container rm az_git"
                         } catch (Exception e) {
-                            print 'container not exist, skip clean'
+                            print 'Container does not exist, skipping the cleanup'
                         }
                     }
                 }
