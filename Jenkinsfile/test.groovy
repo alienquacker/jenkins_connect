@@ -15,7 +15,6 @@ pipeline {
                             sh "echo '${password}' | sudo -S docker container rm az_git"
                         } catch (Exception e) {
                             print 'Container does not exist, skipping the cleanup'
-                            currentBuild.result = 'SUCCESS'
                         }
                     }
                 }
@@ -41,6 +40,7 @@ pipeline {
                     ]) {
                         sh "echo '${password}' | sudo -S docker build ${WORKSPACE}/auto -t az_nginx"
                         sh "echo '${password}' | sudo -S docker run -d -p 8157:80 --name az_git -v /home/adminci/az_cont_files:/stat az_nginx"
+                        currentBuild.result = 'SUCCESS'
                     }
                 }
             }
