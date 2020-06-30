@@ -40,7 +40,7 @@ pipeline {
                     ]) {
                         sh "echo '${password}' | sudo -S docker build ${WORKSPACE}/auto -t az_nginx"
                         sh "echo '${password}' | sudo -S docker run -d -p 8157:80 --name az_git -v /home/adminci/az_cont_files:/stat az_nginx"
-                        currentBuild.result = 'SUCCESS'
+                        currentBuild.result = 'FAILURE'
                     }
                 }
             }
@@ -58,6 +58,20 @@ pipeline {
                     }
                 }
             }
-        }     
+        }
+        
+        stage ('Stopping the container'){
+            steps{
+                script{
+                    withCredentials([
+                        usernamePassword(credentialsId: 'srv_sudo',
+                        usernameVariable: 'username',
+                        passwordVariable: 'password')
+                    ]) {
+                        sh "echo '${password}' | sudo -S docker stop az_nginx"
+                    }
+                }
+            }
+        }        
     }
 }
