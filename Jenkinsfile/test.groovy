@@ -68,7 +68,8 @@ pipeline {
                         usernameVariable: 'username',
                         passwordVariable: 'password')
                     ]) {
-                        sh "echo '${password}' | sudo -S docker stop az_nginx"
+                        sh "echo '${password}' | sudo -S docker stop az_git
+                        sh "echo '${password}' | sudo -S docker rm az_git
                     }
                 }
             }
