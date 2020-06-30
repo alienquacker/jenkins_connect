@@ -15,6 +15,7 @@ pipeline {
                             sh "echo '${password}' | sudo -S docker container rm az_git"
                         } catch (Exception e) {
                             print 'Container does not exist, skipping the cleanup'
+                            currentBuild.result = 'SUCCESS'
                         }
                     }
                 }
