@@ -52,8 +52,8 @@ pipeline {
                         usernameVariable: 'username',
                         passwordVariable: 'password')
                     ]) {
-                        sh "echo '${password}' | sudo -S docker exec -t az_git bash -c 'df -h > /stat/stats.txt'"
-                        sh "echo '${password}' | sudo -S docker exec -t az_git bash -c 'top -n 1 -b >> /stat/stats.txt'"
+                        sh "echo '${password}' | sudo -S docker exec -t az_git bash -c 'df -h > /stat/stats_az.txt'"
+                        sh "echo '${password}' | sudo -S docker exec -t az_git bash -c 'top -n 1 -b >> /stat/stats_az.txt'"
                     }
                 }
             }
